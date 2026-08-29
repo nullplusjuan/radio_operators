@@ -20,7 +20,7 @@ Features:
 """,
     "author": "REACT Team 6006",
     "category": "Contacts",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": ["contacts"],
     "data": [
         "security/ir.model.access.csv",
