@@ -208,7 +208,7 @@ When adding features intended for emergency or volunteer organizations, reliabil
 
 ## License
 
-Copyright © 2026 Joshua Dhalai
+Copyright © 2026 Joshua D
 
 Radio Operators is free software licensed under the GNU Affero General Public License, version 3 or, at your option, any later version.
 
