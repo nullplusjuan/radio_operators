@@ -1,6 +1,6 @@
 {
     "name": "Radio Operators",
-    "version": "18.0.1.0.0",
+    "version": "18.0.2.0.0",
     "summary": "Track radio operator callsigns on contacts",
     "description": """
 Radio Operators
@@ -24,6 +24,7 @@ Features:
     "depends": ["contacts"],
     "data": [
         "security/ir.model.access.csv",
+        "data/radio_organization_data.xml",
         "views/radio_operator_views.xml",
         "views/res_partner_views.xml",
         "data/radio_operator_tag_data.xml",

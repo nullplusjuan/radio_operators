@@ -34,7 +34,7 @@
                               decoration-muted="status == 'inactive'">
                             <field name="callsign"/>
                             <field name="callsign_type"/>
-                            <field name="issuer"/>
+                            <field name="issuing_organization_id"/>
                             <field name="issue_date" optional="hide"/>
                             <field name="expires" optional="hide"/>
                             <field name="expiry_date"/>

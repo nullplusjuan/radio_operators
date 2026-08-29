@@ -39,10 +39,12 @@ class RadioCallsign(models.Model):
         index=True,
     )
 
-    issuer = fields.Char(
+    issuing_organization_id = fields.Many2one(
+        "radio.organization",
         string="Issued By",
         index=True,
-        help="Organization or authority which assigned the callsign.",
+        ondelete="restrict",
+        help="Organization, team, regulator, or other authority that issued this callsign.",
     )
 
     issue_date = fields.Date(string="Issue Date")
@@ -83,7 +85,6 @@ class RadioCallsign(models.Model):
     )
 
     notes = fields.Text()
-
     active = fields.Boolean(default=True)
 
     @api.depends("active", "expires", "expiry_date")

@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_radio_callsign_user,radio.callsign user,model_radio_callsign,base.group_user,1,1,1,1
 access_radio_callsign_tag_user,radio.callsign.tag user,model_radio_callsign_tag,base.group_user,1,1,1,1
+access_radio_organization_user,radio.organization user,model_radio_organization,base.group_user,1,1,1,1

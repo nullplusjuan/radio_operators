@@ -1,6 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Issuing Organizations -->
+
+    <record id="view_radio_organization_list" model="ir.ui.view">
+        <field name="name">radio.organization.list</field>
+        <field name="model">radio.organization</field>
+        <field name="arch" type="xml">
+            <list string="Issuing Organizations">
+                <field name="complete_name"/>
+                <field name="code"/>
+                <field name="organization_type"/>
+                <field name="parent_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_radio_organization_form" model="ir.ui.view">
+        <field name="name">radio.organization.form</field>
+        <field name="model">radio.organization</field>
+        <field name="arch" type="xml">
+            <form string="Issuing Organization">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="organization_type"/>
+                            <field name="parent_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="complete_name" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                    <notebook>
+                        <page string="Sub-Organizations">
+                            <field name="child_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="organization_type"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_radio_organization_search" model="ir.ui.view">
+        <field name="name">radio.organization.search</field>
+        <field name="model">radio.organization</field>
+        <field name="arch" type="xml">
+            <search string="Search Issuing Organizations">
+                <field name="name"/>
+                <field name="complete_name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <filter name="teams" string="Teams" domain="[('organization_type', '=', 'team')]"/>
+                <filter name="national" string="National Organizations" domain="[('organization_type', '=', 'national')]"/>
+                <filter name="regulators" string="Regulators" domain="[('organization_type', '=', 'regulator')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_type" string="Type" context="{'group_by': 'organization_type'}"/>
+                    <filter name="group_parent" string="Parent Organization" context="{'group_by': 'parent_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_radio_organization" model="ir.actions.act_window">
+        <field name="name">Issuing Organizations</field>
+        <field name="res_model">radio.organization</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_radio_organization_search"/>
+    </record>
+
+    <!-- Callsigns -->
+
     <record id="view_radio_callsign_list" model="ir.ui.view">
         <field name="name">radio.callsign.list</field>
         <field name="model">radio.callsign</field>
@@ -11,7 +99,7 @@
                 <field name="callsign"/>
                 <field name="partner_id"/>
                 <field name="callsign_type"/>
-                <field name="issuer"/>
+                <field name="issuing_organization_id"/>
                 <field name="issue_date" optional="hide"/>
                 <field name="expires" optional="hide"/>
                 <field name="expiry_date"/>
@@ -39,7 +127,7 @@
                         <group>
                             <field name="partner_id"/>
                             <field name="callsign_type"/>
-                            <field name="issuer"/>
+                            <field name="issuing_organization_id"/>
                             <field name="is_primary"/>
                         </group>
                         <group>
@@ -70,7 +158,7 @@
             <search string="Search Radio Callsigns">
                 <field name="callsign"/>
                 <field name="partner_id"/>
-                <field name="issuer"/>
+                <field name="issuing_organization_id"/>
                 <field name="tag_ids"/>
 
                 <filter name="active_callsigns" string="Active" domain="[('status', '=', 'active')]"/>
@@ -81,7 +169,7 @@
 
                 <group expand="0" string="Group By">
                     <filter name="group_type" string="Type" context="{'group_by': 'callsign_type'}"/>
-                    <filter name="group_issuer" string="Issuer" context="{'group_by': 'issuer'}"/>
+                    <filter name="group_issuer" string="Issued By" context="{'group_by': 'issuing_organization_id'}"/>
                     <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
                 </group>
             </search>
@@ -109,6 +197,14 @@
         parent="menu_radio_operators_root"
         action="action_radio_callsign"
         sequence="10"
+    />
+
+    <menuitem
+        id="menu_radio_organizations"
+        name="Issuing Organizations"
+        parent="menu_radio_operators_root"
+        action="action_radio_organization"
+        sequence="20"
     />
 
 </odoo>
