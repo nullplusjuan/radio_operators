@@ -14,7 +14,6 @@
 {
     "name": "Radio Operators",
     "version": "18.0.2.0.0",
-    "license": "AGPL-3",
     "summary": "Track radio operator callsigns on contacts",
     "description": """
 Radio Operators
