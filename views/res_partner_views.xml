@@ -31,7 +31,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <field name="radio_operator" invisible="1"/>
             </xpath>
 
-            <xpath expr="//notebook" position="inside">
+            <xpath expr="//page[@name='contact_addresses']" position="before">
                 <page string="Radio Callsigns" name="radio_callsigns">
                     <field name="radio_callsign_ids" context="{'default_partner_id': id}">
                         <list editable="bottom"
