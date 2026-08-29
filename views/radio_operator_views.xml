@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_radio_callsign_list" model="ir.ui.view">
+        <field name="name">radio.callsign.list</field>
+        <field name="model">radio.callsign</field>
+        <field name="arch" type="xml">
+            <list string="Radio Callsigns"
+                  decoration-danger="status == 'expired'"
+                  decoration-muted="status == 'inactive'">
+                <field name="callsign"/>
+                <field name="partner_id"/>
+                <field name="callsign_type"/>
+                <field name="issuer"/>
+                <field name="issue_date" optional="hide"/>
+                <field name="expires" optional="hide"/>
+                <field name="expiry_date"/>
+                <field name="status"/>
+                <field name="is_primary"/>
+                <field name="tag_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_radio_callsign_form" model="ir.ui.view">
+        <field name="name">radio.callsign.form</field>
+        <field name="model">radio.callsign</field>
+        <field name="arch" type="xml">
+            <form string="Radio Callsign">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="callsign"/>
+                        <h1>
+                            <field name="callsign" placeholder="e.g. R615"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="callsign_type"/>
+                            <field name="issuer"/>
+                            <field name="is_primary"/>
+                        </group>
+                        <group>
+                            <field name="issue_date"/>
+                            <field name="expires"/>
+                            <field name="expiry_date" invisible="not expires" required="expires"/>
+                            <field name="status" readonly="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    </group>
+
+                    <group>
+                        <field name="notes" placeholder="License number, restrictions, historical notes, etc."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_radio_callsign_search" model="ir.ui.view">
+        <field name="name">radio.callsign.search</field>
+        <field name="model">radio.callsign</field>
+        <field name="arch" type="xml">
+            <search string="Search Radio Callsigns">
+                <field name="callsign"/>
+                <field name="partner_id"/>
+                <field name="issuer"/>
+                <field name="tag_ids"/>
+
+                <filter name="active_callsigns" string="Active" domain="[('status', '=', 'active')]"/>
+                <filter name="expired_callsigns" string="Expired" domain="[('status', '=', 'expired')]"/>
+                <filter name="react_callsigns" string="REACT" domain="[('callsign_type', '=', 'react')]"/>
+                <filter name="amateur_callsigns" string="Amateur / Ham" domain="[('callsign_type', '=', 'amateur')]"/>
+                <filter name="primary_callsigns" string="Primary" domain="[('is_primary', '=', True)]"/>
+
+                <group expand="0" string="Group By">
+                    <filter name="group_type" string="Type" context="{'group_by': 'callsign_type'}"/>
+                    <filter name="group_issuer" string="Issuer" context="{'group_by': 'issuer'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_radio_callsign" model="ir.actions.act_window">
+        <field name="name">Radio Callsigns</field>
+        <field name="res_model">radio.callsign</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_radio_callsign_search"/>
+        <field name="context">{'search_default_active_callsigns': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_radio_operators_root"
+        name="Radio Operators"
+        sequence="80"
+        web_icon="radio_operators,static/description/icon.png"
+    />
+
+    <menuitem
+        id="menu_radio_callsigns"
+        name="Callsigns"
+        parent="menu_radio_operators_root"
+        action="action_radio_callsign"
+        sequence="10"
+    />
+
+</odoo>

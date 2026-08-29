@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="radio_tag_react" model="radio.callsign.tag">
+        <field name="name">REACT</field>
+        <field name="color">2</field>
+    </record>
+
+    <record id="radio_tag_amateur" model="radio.callsign.tag">
+        <field name="name">Amateur Radio</field>
+        <field name="color">4</field>
+    </record>
+
+    <record id="radio_tag_gmrs" model="radio.callsign.tag">
+        <field name="name">GMRS</field>
+        <field name="color">5</field>
+    </record>
+
+    <record id="radio_tag_emergency_comms" model="radio.callsign.tag">
+        <field name="name">Emergency Communications</field>
+        <field name="color">9</field>
+    </record>
+
+</odoo>
