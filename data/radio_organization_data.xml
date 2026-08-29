@@ -1,9 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright 2026 Joshua D
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
-<?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
 
     <record id="radio_org_react_tt" model="radio.organization">
