@@ -14,7 +14,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {
     "name": "Radio Operators",
-    "version": "18.0.2.0.0",
+    "version": "18.0.3.0.0",
     "summary": "Track radio operator callsigns on contacts",
     "description": """
 Radio Operators

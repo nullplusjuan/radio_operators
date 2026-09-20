@@ -62,6 +62,11 @@ class RadioCallsign(models.Model):
 
     issue_date = fields.Date(string="Issue Date")
 
+    license_class = fields.Char(
+        string="Licence Class / Grade",
+        help="Jurisdiction-specific operator licence class or grade, for example Advanced, General, or Technician.",
+    )
+
     expires = fields.Boolean(
         string="Expires",
         default=False,

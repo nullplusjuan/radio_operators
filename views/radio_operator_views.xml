@@ -106,6 +106,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <field name="callsign_type"/>
                 <field name="issuing_organization_id"/>
                 <field name="issue_date" optional="hide"/>
+                <field name="license_class" optional="show"/>
                 <field name="expires" optional="hide"/>
                 <field name="expiry_date"/>
                 <field name="status"/>
@@ -137,6 +138,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         </group>
                         <group>
                             <field name="issue_date"/>
+                            <field name="license_class" invisible="callsign_type != 'amateur'"/>
                             <field name="expires"/>
                             <field name="expiry_date" invisible="not expires" required="expires"/>
                             <field name="status" readonly="1"/>
