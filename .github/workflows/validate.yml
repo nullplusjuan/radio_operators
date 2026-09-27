@@ -1,0 +1,77 @@
+name: Validate Odoo module
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+
+      - name: Compile Python
+        run: python -m compileall -q .
+
+      - name: Parse XML
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          for path in Path(".").rglob("*.xml"):
+              ET.parse(path)
+              print("OK", path)
+          PY
+
+      - name: Parse Odoo manifest
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          path = Path("__manifest__.py")
+          data = ast.literal_eval(path.read_text(encoding="utf-8"))
+          assert isinstance(data, dict), "Manifest must evaluate to a dict"
+          assert data.get("version"), "Manifest version is required"
+          assert data.get("license"), "Manifest license is required"
+          print("Version:", data["version"])
+          print("License:", data["license"])
+          PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          if [ ! -d static ]; then
+            echo "No static directory; skipping JavaScript validation."
+            exit 0
+          fi
+
+          found=0
+          while IFS= read -r -d '' file; do
+            found=1
+            echo "Checking $file"
+            cp "$file" /tmp/odoo-check.mjs
+            node --check /tmp/odoo-check.mjs
+          done < <(find static -type f -name '*.js' -print0)
+
+          if [ "$found" -eq 0 ]; then
+            echo "No JavaScript files found."
+          fi
