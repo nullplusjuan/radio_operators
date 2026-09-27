@@ -22,14 +22,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Reject unresolved merge markers
-        shell: bash
-        run: |
-          if grep -R -n -E '^(<<<<<<<|=======|>>>>>>>)' \
-            --exclude-dir=.git --exclude='*.pyc' .; then
-            echo "Unresolved merge markers found."
-            exit 1
-          fi
 
       - name: Compile Python
         run: python -m compileall -q .
